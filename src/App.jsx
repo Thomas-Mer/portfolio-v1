@@ -1,62 +1,75 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Projects from "./components/Projects";
 
 function App() {
-  const [dark, setDark] = useState(false);
+  const [darkMode, setDarkMode] = useState(() => {
+    try {
+      return localStorage.getItem("darkMode") === "true";
+    } catch {
+      return false;
+    }
+  });
+
+  useEffect(() => {
+    document.body.classList.toggle("dark", darkMode);
+    try {
+      localStorage.setItem("darkMode", darkMode);
+    } catch (e) {
+      // ignore failed localStorage writes (e.g., privacy mode)
+    }
+  }, [darkMode]);
 
   return (
-    <div className={dark ? "dark" : ""}>
-      <header className="header">
-        <div>
-          <h1 className="title">Thomas Mermingis</h1>
-          <p className="subtitle">Frontend Web Developer</p>
+    <div>
+      <header className="site-header">
+        <div className="site-title">
+          <h1>Thomas Mermingis</h1>
+          <p>Frontend Web Developer</p>
         </div>
 
-        <div className="headerActions">
+        <div className="header-links">
           <a
-            className="link"
             href="https://github.com/Thomas-Mer"
             target="_blank"
             rel="noreferrer"
           >
             GitHub
           </a>
+
           <a
-            className="link"
             href="https://www.linkedin.com/in/thomas-m-/"
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
           >
             LinkedIn
           </a>
 
-          <button className="button" onClick={() => setDark((v) => !v)}>
-            {dark ? "Light" : "Dark"}
+          <button
+            className="mode-toggle"
+            onClick={() => setDarkMode((prev) => !prev)}
+            aria-pressed={darkMode}
+            aria-label="Toggle color scheme"
+            title="Toggle color scheme"
+          >
+            {darkMode ? "☀️ Light mode" : "🌙 Dark mode"}
           </button>
         </div>
       </header>
 
-      <main className="main">
-        <section className="section">
+      <main>
+        <section>
           <h2>About</h2>
           <p>
-            Frontend developer building clean, responsive web applications with
-            HTML, CSS, JavaScript, and React. Open to junior roles and freelance
-            projects.
+            Frontend developer building clean, responsive web applications using
+            HTML, CSS, JavaScript, and React. Focused on clarity, usability, and
+            practical problem solving.
           </p>
         </section>
 
         <Projects />
-
-        <section className="section">
-          <h2>Contact</h2>
-          <p>
-            Email: <span className="mono">thomasmermigis@gmail.com</span>
-          </p>
-        </section>
       </main>
 
-      <footer className="footer">
+      <footer>
         © {new Date().getFullYear()} Thomas Mermingis
       </footer>
     </div>
