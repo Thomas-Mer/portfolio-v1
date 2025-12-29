@@ -17,7 +17,7 @@ function Projects() {
           title="Business Website"
           description="Responsive one-page business website focused on clean layout and usability."
           github=""
-          demo=""
+          demo="https://comfy-dieffenbachia-093a88.netlify.app"
         />
       </div>
     </section>

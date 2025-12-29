@@ -5,16 +5,17 @@ function ProjectCard({ title, description, github, demo }) {
       <p className="cardDesc">{description}</p>
 
       <div className="cardLinks">
-        {github && (
+        {github ? (
           <a className="link" href={github} target="_blank" rel="noreferrer">
             GitHub
           </a>
-        )}
-        {demo && (
+        ) : null}
+
+        {demo ? (
           <a className="link" href={demo} target="_blank" rel="noreferrer">
             Live Demo
           </a>
-        )}
+        ) : null}
       </div>
     </div>
   );
